@@ -1,17 +1,11 @@
 
 <?php
 get_header();
-while (have_posts()){the_post(); ?>
+while (have_posts()){the_post();
+pageBannerHandle();
+?>
 
-    <div class="page-banner">
-        <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('images/ocean.jpg') ?>);"></div>
-        <div class="page-banner__content container container--narrow">
-            <h1 class="page-banner__title"><?php the_title(); ?></h1>
-            <div class="page-banner__intro">
-                <p>This is a content Program Post Type</p>
-            </div>
-        </div>
-    </div>
+
 
     <div class="container container--narrow page-section">
         <div class="metabox metabox--position-up metabox--with-home-link">
@@ -50,30 +44,51 @@ while (have_posts()){the_post(); ?>
         <hr class="section-break">
         <h2 class="headline headline--medium">Related <?php the_title() ?> Event</h2>
             <?php
-        while ($homeEvent->have_posts()){ $homeEvent->the_post(); ?>
+        while ($homeEvent->have_posts()){ $homeEvent->the_post();
+            get_template_part('template-parts/content','event');
+        ?>
 
-            <div class="event-summary">
-                <a class="event-summary__date t-center" href="<?php the_permalink() ?>">
-                            <span class="event-summary__month">
-                            <?php
-                            $argTime=(string)get_field('events_date');
-                            $EventDateIdeal=new DateTime($argTime);
-                            echo $EventDateIdeal->format('M');
-                            ?>
-
-                            </span>
-                    <span class="event-summary__day"><?php echo $EventDateIdeal->format('d'); ?></span>
-                </a>
-                <div class="event-summary__content">
-                    <h5 class="event-summary__title headline headline--tiny"><a href="<?php the_permalink() ?>"><?php the_title() ?></a></h5>
-                    <p><?php echo wp_trim_words(get_the_content(),10); ?> <a href="<?php the_permalink() ?>" class="nu gray">Learn more</a></p>
-                </div>
-            </div>
 
 
         <?php } wp_reset_postdata(); ?>
 <?php } ?>
 
+<!--        this below custom query professor-->
+
+<?php
+$args=array(
+    'post_type'=>'professor',
+    'posts_per_page'=> -1,
+    'orderby'=>'title',
+    'order'=>'ASC',
+    'meta_query'=>array(
+        array(
+            'key'=>'related_program',
+            'compare'=>'LIKE',
+            'value'=>'"'.get_the_ID().'"'
+        )
+    )
+);
+                $homeEvent=new WP_Query($args);
+        if ($homeEvent->have_posts()){
+            ?>
+        <hr class="section-break">
+        <h2 class="headline headline--medium">Related <?php the_title() ?> Professor</h2>
+            <?php
+            echo '<ul class="professor-cards">';
+        while ($homeEvent->have_posts()){ $homeEvent->the_post(); ?>
+
+         <li class="professor-card__list-item">
+             <a class="professor-card" href="<?php the_permalink() ?>">
+                 <img class="professor-card__image" src="<?php the_post_thumbnail_url('professorLandscape') ?>" alt="">
+                 <span class="professor-card__name"><?php the_title() ?></span>
+             </a>
+         </li>
+
+
+        <?php } wp_reset_postdata(); ?>
+<?php } ?>
+    </ul>
     </div>
     <?php
 }

@@ -20,7 +20,7 @@
                     <li <?php if(is_page('aboutus')or wp_get_post_parent_id(0)==32){ echo 'class="current-menu-item"';} ?>><a href="<?php echo site_url('/aboutus') ?>">About Us</a></li>
                     <li <?php if(get_post_type()=='program'){ echo 'class="current-menu-item"';} ?>><a href="<?php echo get_post_type_archive_link('program')?>">Programs</a></li>
                     <li <?php if(get_post_type()=='events'OR is_page('past-events')){ echo 'class="current-menu-item"';} ?>><a href="<?php echo get_post_type_archive_link('events')?>">Events</a></li>
-                    <li><a href="#">Campuses</a></li>
+                    <li <?php if(get_post_type()=='campus'){ echo 'class="current-menu-item"';} ?>><a href="<?php echo get_post_type_archive_link('campus')?>">Campuses</a></li>
                     <li <?php if(get_post_type()=='post'){ echo 'class="current-menu-item"';} ?>><a href="<?php echo site_url('/blog') ?>">Blog</a></li>
                 </ul>
             </nav>
