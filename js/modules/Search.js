@@ -2,6 +2,7 @@ import $ from 'jquery';
 class Search {
 
     constructor(){
+        this.htmlTemplateSearch();
         this.preSetTime;
         this.spinnerVisible=false ;
         this.resultDiv=$('#search-overlay__results');
@@ -30,7 +31,7 @@ class Search {
                     this.resultDiv.html('<div class="spinner-loader"></div>');
                     this.spinnerVisible=true;
                 }
-                this.timeVar=setTimeout(this.getResults.bind(this),2000)//arg 1-func arg2 delay
+                this.timeVar=setTimeout(this.getResults.bind(this),750)//arg 1-func arg2 delay
 
             }else{
                 this.resultDiv.html('');
@@ -44,8 +45,27 @@ class Search {
 
 
     getResults(){
-        this.resultDiv.html("welcome to type succesfull");
-        this.spinnerVisible=false;
+     //arg1=requestUrl arg2=callback result arg1 to arg 2
+        $.getJSON(main_var.root_site+'/wp-json/wp/v2/posts?search='+this.SetTime.val(),
+         result=>{
+               $.getJSON(main_var.root_site+'/wp-json/wp/v2/pages?search='+this.SetTime.val(),
+                   pages=>{
+                   var combine=result.concat(pages);
+                       this.resultDiv.html(
+                           `
+                    <h2 class="search-overlay__section-title">General Information</h2>
+                   ${combine.length ? `<ul  class="link-list min-list">`:`there isnt any search for this word`}
+                    ${combine.map(item=>`<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
+                    ${combine.length ? `</ul>` : ``}
+                    `
+
+                       ); this.spinnerVisible=false;
+                   }
+                   )
+// if not work to within back tick `  use ternary operator
+            }
+            //we are putting func(){}.bind(this) for annoymos func can this property within ES6  combine=>{}  no need bind
+            )
     }
     keyOverlay(e){
     // console.log(e.keyCode);
@@ -62,9 +82,30 @@ class Search {
     }
     openOverlay(){
         this.overlay.addClass("search-overlay--active");
+        this.SetTime.val('');
+        setTimeout(()=>this.SetTime.focus(),301);
+        this.checkOpen=true;
     }
     closeOverlay(){
         this.overlay.removeClass("search-overlay--active");
+        this.checkOpen=false;
+    }
+    htmlTemplateSearch(){
+        $('body').append(`
+        <div class="search-overlay ">
+    <div class="search-overlay__top">
+        <div class="container">
+            <i class="fa fa-search search-overlay__icon" aria-hidden="true"></i>
+            <input type="text" class="search-term" placeholder="what are you looking for?" id="search-term">
+            <i class="fa fa-window-close search-overlay__close" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div class="container">
+        <div id="search-overlay__results"></div>
+    </div>
+</div>
+
+        `)
     }
 }
 export default Search; //for import within script.js or other place this code has necessary

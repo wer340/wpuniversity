@@ -46,6 +46,9 @@ function university_files() {
     wp_enqueue_style('nickname-google-idelname', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
     wp_enqueue_style('nickname-ideal', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
     wp_enqueue_style('university_main_styles', get_stylesheet_uri(),null,microtime());
+    wp_localize_script('jsbundle','main_var',array(
+       'root_site'=>get_site_url()
+    ));
 }
 //microtime() put   reason disable cashing
 add_action('wp_enqueue_scripts', 'university_files');
