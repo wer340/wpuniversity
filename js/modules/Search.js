@@ -43,30 +43,50 @@ class Search {
 
     }
 
-
-    getResults(){
-     //arg1=requestUrl arg2=callback result arg1 to arg 2
-        $.getJSON(main_var.root_site+'/wp-json/wp/v2/posts?search='+this.SetTime.val(),
-         result=>{
-               $.getJSON(main_var.root_site+'/wp-json/wp/v2/pages?search='+this.SetTime.val(),
-                   pages=>{
-                   var combine=result.concat(pages);
-                       this.resultDiv.html(
-                           `
+//Async
+    getResults() {
+        $.when(
+            $.getJSON(main_var.root_site + '/wp-json/wp/v2/posts?search=' + this.SetTime.val()),
+            $.getJSON(main_var.root_site + '/wp-json/wp/v2/pages?search=' + this.SetTime.val())
+        ).then((result, pages) => {
+                var combine = result[0].concat(pages[0]);
+                // console.log(result);//result and page every 3 array   array[0] is data console log show other cell
+                this.resultDiv.html(
+                    `
                     <h2 class="search-overlay__section-title">General Information</h2>
-                   ${combine.length ? `<ul  class="link-list min-list">`:`there isnt any search for this word`}
-                    ${combine.map(item=>`<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
+                   ${combine.length ? `<ul  class="link-list min-list">` : `there isnt any search for this word`}
+                    ${combine.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
                     ${combine.length ? `</ul>` : ``}
                     `
-
-                       ); this.spinnerVisible=false;
-                   }
-                   )
-// if not work to within back tick `  use ternary operator
+                );
+                this.spinnerVisible = false;
             }
-            //we are putting func(){}.bind(this) for annoymos func can this property within ES6  combine=>{}  no need bind
-            )
+        );
     }
+    //Syn wait for after command
+     //arg1=requestUrl arg2=callback result arg1 to arg 2
+     //    $.getJSON(main_var.root_site+'/wp-json/wp/v2/posts?search='+this.SetTime.val(),
+     //     result=>{
+     //           $.getJSON(main_var.root_site+'/wp-json/wp/v2/pages?search='+this.SetTime.val(),
+     //               pages=>{
+     //               var combine=result.concat(pages);
+     //               console.log(combine);
+     //                   this.resultDiv.html(
+     //                       `
+     //                <h2 class="search-overlay__section-title">General Information</h2>
+     //               ${combine.length ? `<ul  class="link-list min-list">`:`there isnt any search for this word`}
+     //                ${combine.map(item=>`<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
+     //                ${combine.length ? `</ul>` : ``}
+     //                `
+     //
+     //                   ); this.spinnerVisible=false;
+     //               }
+     //               )
+// if not work to within back tick `  use ternary operator
+//             }
+            //we are putting func(){}.bind(this) for annoymos func can this property within ES6  combine=>{}  no need bind
+            // )
+    // }
     keyOverlay(e){
     // console.log(e.keyCode);
         if(e.keyCode==83 &&  !this.checkOpen && !$("input,textarea").is(':focus')){
