@@ -55,7 +55,7 @@ class Search {
                     `
                     <h2 class="search-overlay__section-title">General Information</h2>
                    ${combine.length ? `<ul  class="link-list min-list">` : `there isnt any search for this word`}
-                    ${combine.map(item => `<li><a href="${item.link}">${item.title.rendered}</a></li>`).join('')}
+                    ${combine.map(item => `<li><a href="${item.link}">${item.title.rendered}</a>${item.type=='post'?`by ${item.authorName}`:''}</li>`).join('')}
                     ${combine.length ? `</ul>` : ``}
                     `
                 );

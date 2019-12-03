@@ -5,7 +5,15 @@
 //}
 //
 //add_action('wp_enqueue_scripts','universityfile');
+require get_theme_file_path('/inc/search_route.php');
+function unversity_restapi(){
+    //arg1 type postType arg2 name customfield arg3 array assotive
+    register_rest_field('post','authorName',array(
+            'get_callback'=>function(){return get_the_author();}
+    ));
+}
 
+add_action('rest_api_init','unversity_restapi');
 function pageBannerHandle(array $arg = null)
 {
     if (!$arg['title_banner']) {
