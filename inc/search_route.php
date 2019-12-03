@@ -17,20 +17,69 @@ function universotySearch(){
 }
 function universitySerachResult($data){
 $arg=array(
-  'post_type'=>'professor',
+  'post_type'=>array('post','page','campus','events','program','professor'),
     //s lowercase search
     's'=>sanitize_text_field($data['term'])
 );
-    $professorResult=array();
-    $professor=new WP_Query($arg);
-        while ($professor->have_posts()){
-            $professor->the_post();
-            array_push($professorResult,array(
-               'title'=>get_the_title(),
-               'permalink'=>get_the_permalink(),
-                'content'=>get_the_content()
+//create sub array for categorize result search
+    $Result=array(
+        'general_inf'=>array(),
+        'campuses'=>array(),
+        'events'=>array(),
+        'programs'=>array(),
+        'professors'=>array()
+    );
+    $resultQuery=new WP_Query($arg);
+        while ($resultQuery->have_posts()){
+            $resultQuery->the_post();
+            $type=get_post_type();
+            switch ($type){
+                case 'post'|'page' :
+                    array_push($Result['general_inf'],array(
+                        'title'=>get_the_title(),
+                        'permalink'=>get_the_permalink()
 
-            ));
+
+                    ));
+
+                break;
+                case 'events':
+                    array_push($Result['events'],array(
+                        'title'=>get_the_title(),
+                        'permalink'=>get_the_permalink(),
+
+                    ));
+
+                break;
+                case 'campus':
+                    array_push($Result['campuses'],array(
+                        'title'=>get_the_title(),
+                        'permalink'=>get_the_permalink(),
+
+
+                    ));
+
+                break;
+                case 'program':
+                    array_push($Result['programs'],array(
+                        'title'=>get_the_title(),
+                        'permalink'=>get_the_permalink(),
+
+
+                    ));
+
+                break;
+                case 'professor':
+                    array_push($Result['professors'],array(
+                        'title'=>get_the_title(),
+                        'permalink'=>get_the_permalink(),
+
+
+                    ));
+
+                break;
+            }
+
         }
-        return $professorResult;
+        return $Result;
 }
