@@ -15,6 +15,22 @@ function universotySearch(){
         'callback'=>'universitySerachResult'
     ));
 }
-function universitySerachResult(){
-    return "welcome my ";
+function universitySerachResult($data){
+$arg=array(
+  'post_type'=>'professor',
+    //s lowercase search
+    's'=>sanitize_text_field($data['term'])
+);
+    $professorResult=array();
+    $professor=new WP_Query($arg);
+        while ($professor->have_posts()){
+            $professor->the_post();
+            array_push($professorResult,array(
+               'title'=>get_the_title(),
+               'permalink'=>get_the_permalink(),
+                'content'=>get_the_content()
+
+            ));
+        }
+        return $professorResult;
 }
