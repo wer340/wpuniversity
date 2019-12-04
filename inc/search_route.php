@@ -32,21 +32,46 @@ $arg=array(
     $resultQuery=new WP_Query($arg);
         while ($resultQuery->have_posts()){
             $resultQuery->the_post();
-            $type=get_post_type();
-            switch ($type){
-                case 'post'|'page' :
+
+            switch (get_post_type()){
+                case 'post':
                     array_push($Result['general_inf'],array(
                         'title'=>get_the_title(),
-                        'permalink'=>get_the_permalink()
+                        'permalink'=>get_the_permalink(),
+                        'type'=>get_post_type(),
+                        'authorName'=>get_the_author()
 
 
                     ));
 
                 break;
+                case 'page' :
+                    array_push($Result['general_inf'],array(
+                        'title'=>get_the_title(),
+                        'permalink'=>get_the_permalink(),
+                        'type'=>get_post_type()
+
+
+                    ));
+
+                    break;
                 case 'events':
+                    $argTime=(string)get_field('events_date');
+                    $EventDateIdeal=new DateTime($argTime);
+                    $description=null;
+                    if(has_excerpt()){
+                        $description=get_the_excerpt();}
+                        else
+                        {
+                        $description=wp_trim_words(get_the_content(),17);
+                        }
                     array_push($Result['events'],array(
                         'title'=>get_the_title(),
                         'permalink'=>get_the_permalink(),
+                        'type'=>get_post_type(),
+                        'month'=>$EventDateIdeal->format('M'),
+                        'day'=>$EventDateIdeal->format('d'),
+                       'description'=>$description
 
                     ));
 
@@ -55,15 +80,15 @@ $arg=array(
                     array_push($Result['campuses'],array(
                         'title'=>get_the_title(),
                         'permalink'=>get_the_permalink(),
-
+                        'type'=>get_post_type()
 
                     ));
-
                 break;
                 case 'program':
                     array_push($Result['programs'],array(
                         'title'=>get_the_title(),
                         'permalink'=>get_the_permalink(),
+                        'type'=>get_post_type()
 
 
                     ));
@@ -73,6 +98,8 @@ $arg=array(
                     array_push($Result['professors'],array(
                         'title'=>get_the_title(),
                         'permalink'=>get_the_permalink(),
+                        'type'=>get_post_type(),
+                        'img'=>get_the_post_thumbnail_url(0,'professorLandscape')
 
 
                     ));
@@ -81,5 +108,27 @@ $arg=array(
             }
 
         }
+$professor=new WP_Query(array(
+    'post_type'=>'professor',
+    'meta_query'=>array(
+        array(
+        'key'=>'related_program',
+        'compare'=>'LIKE',
+        'value'=>'"67"'
+    ))
+));
+        while ($professor->have_posts()){
+            $professor->the_post();
+            array_push($Result['professors'],
+                array(
+                'title'=>get_the_title(),
+                'permalink'=>get_the_permalink(),
+                'type'=>get_post_type(),
+                'img'=>get_the_post_thumbnail_url(0,'professorLandscape')
+                )
+            );
+
+        }
+
         return $Result;
 }
