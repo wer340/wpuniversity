@@ -204,6 +204,7 @@ class Search {
   closeOverlay() {
     this.overlay.removeClass("search-overlay--active");
     this.checkOpen = false;
+      $("body").removeClass("body-no-scroll");
   }
   htmlTemplateSearch() {
     $("body").append(`
