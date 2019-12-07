@@ -107,4 +107,21 @@ function campus_location($api){
     $api['key']=$api_key;
     return $api;
 }
+// no display dashborb for subcriber user
+add_action('admin_init','redirectSubcribToindex');
+function redirectSubcribToindex(){
+    $userCurrent=wp_get_current_user();
+    if (count($userCurrent->roles)==1 AND $userCurrent->roles[0]=='subscriber'){
+wp_redirect(site_url('/'));
+exit;
+    }
+}
+add_action('wp_loaded','noAppearAminTab');
+function noAppearAminTab(){
+    $userCurrent=wp_get_current_user();
+    if (count($userCurrent->roles)==1 AND $userCurrent->roles[0]=='subscriber'){
+        show_admin_bar(false);
+    }
+}
+
 //add_filter('acf/fields/google_map/api','campus_location');

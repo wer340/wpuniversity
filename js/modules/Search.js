@@ -200,6 +200,7 @@ class Search {
     setTimeout(() => this.SetTime.focus(), 301);
     this.checkOpen = true;
     $("body").addClass("body-no-scroll");
+    return false;
   }
   closeOverlay() {
     this.overlay.removeClass("search-overlay--active");
