@@ -123,5 +123,19 @@ function noAppearAminTab(){
         show_admin_bar(false);
     }
 }
+//customize login screen      replace  wordpress.org  when click logo wordpress  but  go to index
+    add_filter('login_headerurl','redirecttomysite');
+function redirecttomysite(){
+    return esc_url(site_url('/'));
+}
+add_action('login_enqueue_scripts','cssoverWite');
+function cssoverWite(){
+    wp_enqueue_style('university_main_styles', get_stylesheet_uri());
 
+}
+//change header title above login
+    add_filter('login_headertitle','titlemylogin');
+function titlemylogin(){
+return get_bloginfo('name');
+}
 //add_filter('acf/fields/google_map/api','campus_location');

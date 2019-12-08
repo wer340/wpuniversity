@@ -489,7 +489,7 @@ p, li {
     background-color: #FFF;
   }
 .page-section--beige {
-    background-color: #FAF0CA;
+    background-color: #317589;
   }
 .page-section p:last-of-type {
     margin-bottom: 0;
@@ -754,7 +754,7 @@ body.login .button-primary:focus {
   box-shadow: 0 1px 0 rgb(186, 78, 56);
 }
 body.login {
-  background-color: #FAF0CA;
+  background-color: #317589;
 }
 .login h1 a {
   color: #0D3B66;
@@ -816,7 +816,7 @@ body.login {
     background: linear-gradient(#F4D35E, rgb(240, 188, 0));
   }
 .btn--beige {
-    background-color: #FAF0CA;
+    background-color: #317589;
     color: #173f58;
   }
 .btn--beige:hover {
@@ -1203,7 +1203,7 @@ body.login {
   }
 .main-navigation .current-menu-item a,
 .main-navigation a:hover {
-  color: #FAF0CA;
+  color: #317589;
 }
 .page-banner {
   background-color: #000;
@@ -1602,7 +1602,7 @@ body.admin-bar .search-overlay {
 .full-width-split__two {
     -webkit-box-flex: 1;
             flex: 1;
-    background-color: #FAF0CA;
+    background-color: #317589;
     padding: 1.6rem 16px;
   }
 @media (min-width: 960px) {
@@ -1661,7 +1661,7 @@ body.admin-bar .search-overlay {
 .page-links {
   position: relative;
   z-index: 1;
-  background-color: #FAF0CA;
+  background-color: #317589;
   margin: 0 0 40px 0;
 }
 @media (min-width: 767px) {
@@ -1686,7 +1686,7 @@ body.admin-bar .search-overlay {
         background-color: #0D3B66;
       }
 .page-links li {
-    border-top: 1px solid rgb(244, 223, 138);
+    border-top: 1px solid rgb(30, 70, 82);
   }
 .page-links li:first-child {
     border-top: none;
@@ -1694,7 +1694,7 @@ body.admin-bar .search-overlay {
 .page-links__active,
   .page-links .current_page_item {
     text-align: center;
-    background-color: rgb(244, 231, 180);
+    background-color: rgb(9, 117, 149);
     color: #0D3B66;
     font-weight: bold;
   }
@@ -1709,7 +1709,7 @@ body.admin-bar .search-overlay {
   }
 .page-links li a:hover {
     color: rgb(13, 51, 87);
-    background-color: rgb(238, 225, 170);
+    background-color: rgb(3, 108, 140);
   }
 .acf-map {
 width: 100%;
@@ -1736,7 +1736,7 @@ margin: 20px 0;
     color: #F95738;
   }
 .metabox {
-  background-color: #FAF0CA;
+  background-color: #317589;
   border-radius: 3px;
   padding: 10px 15px;
   display: inline-block;
@@ -1759,10 +1759,10 @@ margin: 20px 0;
 .metabox p {
     margin: 0;
     font-size: .9rem;
-    color: rgb(168, 146, 56);
+    color: rgb(0, 0, 0);
   }
 .metabox a {
-    color: rgb(168, 146, 56);
+    color: rgb(0, 0, 0);
     text-decoration: none;
     font-weight: bold;
   }
