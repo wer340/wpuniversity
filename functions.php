@@ -55,7 +55,8 @@ function university_files() {
     wp_enqueue_style('nickname-ideal', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
     wp_enqueue_style('university_main_styles', get_stylesheet_uri(),null,microtime());
     wp_localize_script('jsbundle','main_var',array(
-       'root_site'=>get_site_url()
+       'root_site'=>get_site_url(),
+        'nonce'=>wp_create_nonce('wp_rest')
     ));
 }
 //microtime() put   reason disable cashing
