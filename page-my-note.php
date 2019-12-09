@@ -18,12 +18,19 @@ while (have_posts()){the_post(); ?>
     </div>
 
     <div class="container container--narrow page-section">
+        <div class="create-note">
+            <h2 class="headline headline--medium">create new post</h2>
+            <input class="new-note-title" placeholder="inter your title" type="text">
+            <textarea class="new-note-body" placeholder="enter your description title here......"></textarea>
+            <span class="submit-note">create</span>
+
+        </div>
       <ul class="min-list link-list" id="my-note">
         <?php
         $ourQuery=new WP_Query(array(
             'post_type'=>'note',
             'posts_per_page'=>-1,
-            'author'=>get_the_author(get_current_user_id())
+            'author'=>get_current_user_id()
         ));
         while ($ourQuery->have_posts()){
             $ourQuery->the_post();?>
