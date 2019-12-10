@@ -14,3 +14,4 @@ var heroSlider = new HeroSlider();
 var googleMap=new GoogleMap();
 var search=new Search();
 var mynote=new MyNote();
+

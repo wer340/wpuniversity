@@ -18,12 +18,13 @@ while (have_posts()){the_post(); ?>
     </div>
 
     <div class="container container--narrow page-section">
+
         <div class="create-note">
             <h2 class="headline headline--medium">create new post</h2>
             <input class="new-note-title" placeholder="inter your title" type="text">
             <textarea class="new-note-body" placeholder="enter your description title here......"></textarea>
             <span class="submit-note">create</span>
-
+            <span class="note-limit-message">note limit reach: deleting an existing note to make room for a new note </span>
         </div>
       <ul class="min-list link-list" id="my-note">
         <?php
@@ -35,7 +36,7 @@ while (have_posts()){the_post(); ?>
         while ($ourQuery->have_posts()){
             $ourQuery->the_post();?>
             <li data-id="<?php the_ID(); ?>">
-                <input readonly class="note-title-field" value="<?php echo esc_attr(wp_trim_words(get_the_title(),3) ) ?>">
+                <input readonly class="note-title-field" value="<?php echo str_replace('خصوصی:','',esc_attr(get_the_title() )) ?>">
                 <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true"></i>Edit</span>
                 <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true"></i>Delete</span>
                 <textarea  class="note-body-field" readonly><?php echo esc_attr( wp_trim_words(get_the_content(),59)) ?></textarea>

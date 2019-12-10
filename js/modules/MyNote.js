@@ -64,6 +64,9 @@ readOnly(nodeSelected)
         main_var.root_site + "/wp-json/wp/v2/note/" + nodeSelected.data("id"),
       type: "DELETE",
       success: response => {
+        if(response.count<5){
+          $(".note-limit-message").removeClass("active")
+        }
         console.log("Congrat delete");
         console.log(response);
         nodeSelected.slideUp();
@@ -139,6 +142,9 @@ var supporData={
         console.log(response);
       },
       error: response => {
+        if(response.responseText=='you have reached your note limited'){
+          $(".note-limit-message").addClass("active")
+        }
         console.log("sorry create");
         console.log(response);
       }
